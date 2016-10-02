@@ -18,12 +18,14 @@ public class UserInput : MonoBehaviour {
 	}
 
     /*  TODO:
+        - Reimplement camera to rotate on center of the camera's world position while holding middle-mouse and 
+            shuffling mouse left/right (i.e. Divinity: Original camera-movement).
         - Adjust camera movement with Arrow-keys.
         - Adjust 'ScrollWidth'-values to be more precise; outer edge of the screen.
         - Adjust 'ScrollSpeed' to feel better (not too fast, not too slow).
         
         [Crucial] - Reimplement camera-movement for movement on terrain (height difference) instead of flat plane.
-            - Possible solution/idea: Calculate distance between camera and ground (terrain) with a fixed delta-distance.
+            - Possible idea: Calculate distance between camera and ground (terrain) with a fixed delta-distance.
     */
     private void MoveCamera() {
         float xpos = Input.mousePosition.x;
