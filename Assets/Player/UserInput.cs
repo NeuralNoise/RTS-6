@@ -7,13 +7,13 @@ public class UserInput : MonoBehaviour {
     private Player player;
 
     void Start () {
-        player = transform.root.GetComponent<Player>();
+        player = transform.root.GetComponent<Player>();        
 	}
 	
 	void Update () {
         if (player.human) {
             MoveCamera();
-            RotateCamera();
+            RotateCamera();            
         }
 	}
 
@@ -37,14 +37,14 @@ public class UserInput : MonoBehaviour {
         bool LeftArrow = Input.GetKey(KeyCode.LeftArrow);
         bool RightArrow = Input.GetKey(KeyCode.RightArrow);
 
-        // Horizontal key camera movement
+        // x-axis camera movement
         if (LeftArrow) {
             movement.x -= ResourceManager.ScrollSpeed;
         }
         else if (RightArrow) {
             movement.x += ResourceManager.ScrollSpeed;
         }
-        // Vertical key camera movement
+        // z-axis camera movement
         if (DownArrow) {
             movement.y -= ResourceManager.ScrollSpeed;
         }
@@ -70,7 +70,14 @@ public class UserInput : MonoBehaviour {
         movement = Camera.main.transform.TransformDirection(movement);
         movement.y = 0;
 
-        // Away from ground movement
+        //TESTING
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        Physics.Raycast(ray, out hit);                
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward) * 1000, Color.green);
+        Debug.Log(hit.distance);
+
+        // Camera zoom
         movement.y -= ResourceManager.ScrollSpeed * Input.GetAxis("Mouse ScrollWheel");
 
         // Calculate desired camera position based on received input
@@ -80,7 +87,7 @@ public class UserInput : MonoBehaviour {
         destination.y += movement.y;
         destination.z += movement.z;
 
-        // Limit away from ground movement to be between a minimum and maximum distance
+        // Limit vertical camera movement between a minimum and maximum distance
         if (destination.y > ResourceManager.MaxCameraHeight) {
             destination.y = ResourceManager.MaxCameraHeight;
         } else if (destination.y < ResourceManager.MinCameraHeight) {
