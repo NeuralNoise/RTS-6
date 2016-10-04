@@ -61,12 +61,19 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Player\HUD\HUD.cs" />
     <Compile Include="Assets\Player\Player.cs" />
     <Compile Include="Assets\Player\UserInput.cs" />
     <Compile Include="Assets\RTS\ResourceManager.cs" />
+    <Compile Include="Assets\WorldObject\Building\Building.cs" />
     <Compile Include="Assets\WorldObject\WorldObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
