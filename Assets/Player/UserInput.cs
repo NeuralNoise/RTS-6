@@ -147,6 +147,29 @@ public class UserInput : MonoBehaviour {
     }
 
     private void RightMouseClick() {
+        if (player.hud.MouseInBounds() && !Input.GetKey(KeyCode.LeftAlt) && player.SelectedObject) {
+            player.SelectedObject.SetSelection(false);
+            player.SelectedObject = null;
+        }
+    }
 
+    private GameObject FindHitObject() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            return hit.collider.gameObject;
+        }
+
+        return null;
+    }
+
+    private Vector3 FindHitPoint() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            return hit.point;
+        }
+
+        return ResourceManager.InvalidPosition;
     }
 }

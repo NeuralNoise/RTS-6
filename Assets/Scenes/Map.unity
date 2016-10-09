@@ -177,6 +177,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 498885433}
+  - 114: {fileID: 498885434}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -199,6 +200,23 @@ Transform:
   - {fileID: 238797959}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &498885434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 498885432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf44b3a4601ee94d82d2d789a3fbb7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Barrack
+  buildImage: {fileID: 0}
+  cost: 25
+  sellValue: 15
+  hitPoints: 100
+  maxHitPoints: 100
 --- !u!1 &684288912
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   username: Hedman
   human: 1
+  hud: {fileID: 0}
 --- !u!4 &2112400422
 Transform:
   m_ObjectHideFlags: 0

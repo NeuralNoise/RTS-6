@@ -3,7 +3,7 @@ using System.Collections;
 
 // Global Resource Manager
 
-namespace RTS { 
+namespace RTS {    
     public static class ResourceManager {
         public static int ScrollWidth { get { return 15; } }
         public static float ScrollSpeed { get { return 25; } }
@@ -11,5 +11,8 @@ namespace RTS {
         public static float RotateSpeed { get { return 100; } }
         public static float MinCameraHeight { get { return 10; } }
         public static float MaxCameraHeight { get { return 40; } }
+        public static Vector3 InvalidPosition { get { return invalidPosition; } }
+
+        private static Vector3 invalidPosition = new Vector3(-99999, -99999, -99999);
     }
 }
