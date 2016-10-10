@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HUD : MonoBehaviour {
-
-    private const int SELECTION_NAME_WIDTH = 15;
+public class HUD : MonoBehaviour {    
 
     public GUISkin resourceSkin;
     public GUISkin ordersSkin;
+
     private const int ORDERS_BAR_HEIGHT = 200;
     private const int RESOURCE_BAR_HEIGHT = 40;
-
     private Player player;
 
 	void Start () {
@@ -26,6 +24,7 @@ public class HUD : MonoBehaviour {
     // Bottom bar
     private void DrawOrdersBar() {
         string selectionName = "";
+
         GUI.skin = ordersSkin;
         GUI.BeginGroup(new Rect(0, Screen.height - ORDERS_BAR_HEIGHT, Screen.width, ORDERS_BAR_HEIGHT));
         GUI.Box(new Rect(0, 0, Screen.width, ORDERS_BAR_HEIGHT), "");
@@ -34,7 +33,7 @@ public class HUD : MonoBehaviour {
             selectionName = player.SelectedObject.objectName;
         }
         if (!selectionName.Equals("")) {
-            GUI.Label(new Rect(0, 10, SELECTION_NAME_WIDTH, ORDERS_BAR_HEIGHT), selectionName);
+            GUI.Label(new Rect(20, 20, Screen.width, ORDERS_BAR_HEIGHT), selectionName);
         }
 
         GUI.EndGroup();

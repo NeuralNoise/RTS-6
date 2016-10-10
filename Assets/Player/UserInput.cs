@@ -13,7 +13,8 @@ public class UserInput : MonoBehaviour {
 	void Update () {
         if (player.human) {
             MoveCamera();
-            RotateCamera();            
+            RotateCamera();
+            MouseActivity();       
         }
 	}
 
@@ -22,10 +23,8 @@ public class UserInput : MonoBehaviour {
             shuffling mouse left/right (i.e. Divinity: Original camera-movement).
         - Adjust camera movement with Arrow-keys.
         - Adjust 'ScrollWidth'-values to be more precise; outer edge of the screen.
-        - Adjust 'ScrollSpeed' to feel better (not too fast, not too slow).
-        
-        [Crucial] - Reimplement camera-movement for movement on terrain (height difference) instead of flat plane.
-            - Possible idea: Calculate distance between camera and ground (terrain) with a fixed delta-distance.
+        - Adjust 'ScrollSpeed' to feel better (not too fast, not too slow).        
+        - Reimplement camera-movement for movement on terrain (height difference) instead of flat plane.            
     */
     private void MoveCamera() {
         float xpos = Input.mousePosition.x;
@@ -65,17 +64,25 @@ public class UserInput : MonoBehaviour {
             movement.z += ResourceManager.ScrollSpeed;
         }
 
+        // Reset camera to default rotation
+        Quaternion currentRotation = Camera.main.transform.rotation;
+        Quaternion targetRotation = ResourceManager.CameraDefaultRotation;
+        if (Input.GetKeyDown(KeyCode.Home)) {
+                      
+            Camera.main.transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, Time.time * 0.1f);
+        }
+
         // Make sure movement is in the direction the camera is pointing
         // but ignore the vertical tilt  of the camera to get a sensible scrolling
         movement = Camera.main.transform.TransformDirection(movement);
         movement.y = 0;
 
         //TESTING
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        Physics.Raycast(ray, out hit);                
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward) * 1000, Color.green);
-        Debug.Log(hit.distance);
+        //RaycastHit hit;
+        //Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        //Physics.Raycast(ray, out hit);                
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.TransformDirection(Vector3.forward) * 1000, Color.green);
+        //Debug.Log(hit.distance);
 
         // Camera zoom
         movement.y -= ResourceManager.ScrollSpeed * Input.GetAxis("Mouse ScrollWheel");
@@ -99,10 +106,8 @@ public class UserInput : MonoBehaviour {
             Camera.main.transform.position = Vector3.MoveTowards(origin, destination, Time.deltaTime * ResourceManager.ScrollSpeed);
         }
     }
-
-    /*  TODO:
-        - Rotate camera with keyboard-keys (e.g. PageUp/PageDown) instead of using mouse.
-    */
+    
+    // Change bad rotation, lawl
     private void RotateCamera() {
         Vector3 origin = Camera.main.transform.eulerAngles;
         Vector3 destination = origin;
@@ -121,9 +126,9 @@ public class UserInput : MonoBehaviour {
 
     private void MouseActivity() {
         if (Input.GetMouseButtonDown(0)) {
-            LeftMouseClick();
+            LeftMouseClick();            
         }else if (Input.GetMouseButtonDown(1)) {
-            RightMouseClick();
+            RightMouseClick();            
         }
     }
 
@@ -131,11 +136,13 @@ public class UserInput : MonoBehaviour {
         if (player.hud.MouseInBounds()) {
             GameObject hitObject = FindHitObject();
             Vector3 hitPoint = FindHitPoint();
+
             if (hitObject && hitPoint != ResourceManager.InvalidPosition) {
                 if (player.SelectedObject) {
                     player.SelectedObject.MouseClick(hitObject, hitPoint, player);                    
                 }else if (hitObject.name != "Ground") {
                     WorldObject worldObject = hitObject.transform.root.GetComponent<WorldObject>();
+
                     if (worldObject) {
                         // we already know the player has no selected object
                         player.SelectedObject = worldObject;
